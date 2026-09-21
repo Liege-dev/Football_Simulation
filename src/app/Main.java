@@ -15,6 +15,9 @@ import world.GameMap;
 import world.PlaySpace;
 import world.MapPreset;
 
+import java.io.IOException;
+import entities.TeamLoader;
+
 public class Main {
 
         public static void main(String[] args) {
@@ -24,8 +27,9 @@ public class Main {
 
                 Frame frame = new Frame("Football Simulation");
 
-                Player[] redPlayers = TeamComp.createLeftTeam(playSpace);
-                Player[] bluePlayers = TeamComp.createRightTeam(playSpace);
+                Player[] redPlayers = loadTeamOrDefault("red-team.txt", playSpace, true);
+
+                Player[] bluePlayers = loadTeamOrDefault("blue-team.txt", playSpace, false);
 
                 Team redTeam = new Team("Red Team", Color.RED, redPlayers);
                 Team blueTeam = new Team("Blue Team", Color.BLUE, bluePlayers);
@@ -106,5 +110,25 @@ public class Main {
                                                 System.exit(0);
                                         }
                                 });
+        }
+
+        private static Player[] loadTeamOrDefault(
+                        String filename,
+                        PlaySpace playSpace,
+                        boolean leftSide) {
+
+                try {
+                        return TeamLoader.loadTeam(filename, playSpace, leftSide);
+                } catch (IOException | IllegalArgumentException e) {
+                        System.out.println(
+                                        "Could not load " + filename + ": " + e.getMessage());
+                        System.out.println("Using the default team.");
+                }
+
+                if (leftSide) {
+                        return TeamComp.createLeftTeam(playSpace);
+                } else {
+                        return TeamComp.createRightTeam(playSpace);
+                }
         }
 }
