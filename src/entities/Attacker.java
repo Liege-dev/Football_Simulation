@@ -43,6 +43,11 @@ public class Attacker extends Player {
                         ball,
                         spawnX,
                         spawnY,
-                        0.40));
+                        getBaseBallInfluence()));
     }
+    @Override
+    public double getBaseBallInfluence() {
+        return 0.40;   // Midfielder: 0.30   Attacker: 0.40
+    }
+
 }

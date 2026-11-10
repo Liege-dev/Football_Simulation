@@ -363,5 +363,24 @@ public abstract class Player extends Entity {
     public Team getOpposingTeam() {
         return opposingTeam;
     }
+    
+    public Team getTeam() {
+        return team;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    // Lets a Coach change how this player behaves after the next restart.
+    public void setDefaultMovementBehaviour(MovementBehaviour behaviour) {
+        this.defaultMovementBehaviour = behaviour;
+    }
+
+    // How strongly this player is pulled towards the ball when holding formation.
+    // Each outfield role overrides this (polymorphism). Goalkeepers don't use it.
+    public double getBaseBallInfluence() {
+        return 0.0;
+    }
 
 }
