@@ -5,7 +5,6 @@ import javax.swing.JPanel;
 import entities.Player;
 import entities.Ball;
 import entities.Team;
-import world.Goal;
 import world.PlaySpace;
 import world.Environment;
 import world.GameMap;
@@ -22,7 +21,6 @@ public class SimulationPanel extends JPanel {
             Team redTeam,
             Team blueTeam,
             Ball ball) {
-
         this.map = map;
         this.redTeam = redTeam;
         this.blueTeam = blueTeam;
@@ -34,82 +32,74 @@ public class SimulationPanel extends JPanel {
             Player[] players,
             Color colour,
             int offsetX,
-            int offsetY) {
+            int offsetY,
+            double scale) {
 
-        int playerSize = 24;
+        int playerSize = 20; // Fixed visual size for the UI
         g.setColor(colour);
 
         for (Player player : players) {
-            g.fillOval(
-                    offsetX + (int) player.getXPos() - playerSize / 2,
-                    offsetY + (int) player.getYPos() - playerSize / 2,
-                    playerSize,
-                    playerSize);
+            int px = offsetX + (int) Math.round(player.getXPos() * scale) - (playerSize / 2);
+            int py = offsetY + (int) Math.round(player.getYPos() * scale) - (playerSize / 2);
+            g.fillOval(px, py, playerSize, playerSize);
         }
     }
 
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g); // This single line activates double buffering
+        super.paintComponent(g); // Activates double buffering
 
-        PlaySpace playSpace = map.getPlaySpace();
         Environment environment = map.getEnvironment();
+        PlaySpace playSpace = map.getPlaySpace();
 
-        int marginX = (int) map.getMarginX();
-        int marginY = (int) map.getMarginY();
+        // Pitch Margins
+        int marginX = 50;
+        int marginY = 50;
 
+        // Calculate dynamic scale to fit the real-world coordinates into the window
+        double scaleX = (double) (getWidth() - (2 * marginX)) / playSpace.getLength();
+        double scaleY = (double) (getHeight() - (2 * marginY)) / playSpace.getWidth();
+        double scale = Math.min(scaleX, scaleY);
+
+        int scaledPitchLength = (int) Math.round(playSpace.getLength() * scale);
+        int scaledPitchWidth = (int) Math.round(playSpace.getWidth() * scale);
+
+        // Draw Surrounding Terrain
         g.setColor(environment.getSurroundingTerrain().getDisplayColor());
         g.fillRect(0, 0, getWidth(), getHeight());
 
+        // Draw Playing Pitch
         g.setColor(environment.getPlayingTerrain().getDisplayColor());
-        g.fillRect(marginX, marginY, (int) playSpace.getWidth(), (int) playSpace.getHeight());
+        g.fillRect(marginX, marginY, scaledPitchLength, scaledPitchWidth);
 
+        // Draw Field Lines
         g.setColor(Color.WHITE);
+        int centerX = marginX + (scaledPitchLength / 2);
+        int centerY = marginY + (scaledPitchWidth / 2);
 
-        Goal leftGoal = playSpace.getLeftGoal();
-        Goal rightGoal = playSpace.getRightGoal();
+        // Halfway line
+        g.drawLine(centerX, marginY, centerX, marginY + scaledPitchWidth);
 
-        int centerX = marginX + (int) playSpace.getWidth() / 2;
-        int centerY = marginY + (int) playSpace.getHeight() / 2;
-
-        g.drawLine(centerX, marginY, centerX, marginY + (int) playSpace.getHeight());
-
-        int circleSize = 150;
+        // Center circle (Scaled to standard pitch dimensions)
+        int circleSize = (int) Math.round(1830 * scale); 
+        if (circleSize < 50) circleSize = 150; // Fallback minimum size
+        
         g.drawOval(
-                centerX - circleSize / 2, 
-                centerY - circleSize / 2, 
-                circleSize, 
+                centerX - (circleSize / 2),
+                centerY - (circleSize / 2),
+                circleSize,
                 circleSize
         );
 
-        g.drawRect(
-                marginX + (int) leftGoal.getX(),
-                marginY + (int) leftGoal.getY(),
-                (int) leftGoal.getWidth(),
-                (int) leftGoal.getHeight());
+        // Draw Teams
+        drawPlayers(g, redTeam.getPlayers(), redTeam.getColor(), marginX, marginY, scale);
+        drawPlayers(g, blueTeam.getPlayers(), blueTeam.getColor(), marginX, marginY, scale);
 
-        g.drawRect(
-                marginX + (int) rightGoal.getX(),
-                marginY + (int) rightGoal.getY(),
-                (int) rightGoal.getWidth(),
-                (int) rightGoal.getHeight());
-
-        drawPlayers(g, redTeam.getPlayers(), redTeam.getColor(), marginX, marginY);
-        drawPlayers(g, blueTeam.getPlayers(), blueTeam.getColor(), marginX, marginY);
-
-        int ballSize = 12;
+        // Draw Ball
+        int ballSize = 14;
         g.setColor(Color.WHITE);
-        g.fillOval(
-                marginX + (int) ball.getXPos() - ballSize / 2,
-                marginY + (int) ball.getYPos() - ballSize / 2,
-                ballSize,
-                ballSize);
-
-        g.setColor(Color.BLACK);
-        g.drawOval(
-                marginX + (int) ball.getXPos() - ballSize / 2,
-                marginY + (int) ball.getYPos() - ballSize / 2,
-                ballSize,
-                ballSize);
+        int ballX = marginX + (int) Math.round(ball.getXPos() * scale) - (ballSize / 2);
+        int ballY = marginY + (int) Math.round(ball.getYPos() * scale) - (ballSize / 2);
+        g.fillOval(ballX, ballY, ballSize, ballSize);
     }
 }

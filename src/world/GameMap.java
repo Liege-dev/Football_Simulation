@@ -5,29 +5,27 @@ public class GameMap {
     private PlaySpace playSpace;
     private Environment environment;
 
-    private double marginX;
-    private double marginY;
+    private double marginX; // World Distances in cm, rather than pixels, to allow for scaling of the map
+    private double marginY; // World Distances in cm, rather than pixels, to allow for scaling of the map
 
     public GameMap(MapPreset preset) {
 
         switch (preset) {
-        
 
             case FIFA_PRO:
-                        playSpace = new PlaySpace(105.0, 68.0);
-                        environment = new Environment();
-                        marginX = 10.0;
-                        marginY = 10.0;
-                        break;
-
+                playSpace = new PlaySpace(10500.0, 6800.0, new FieldMarkings());
+                environment = new Environment();
+                marginX = 1000.0;
+                marginY = 1000.0;
+                break;
 
             case DEFAULT:
-                default:
-                    playSpace = new PlaySpace(1000.0, 650.0);
-                    environment = new Environment();
-                    marginX = 150.0;
-                    marginY = 100.0;
-                    break;
+            default:
+                playSpace = new PlaySpace(10000.0, 6500.0, new FieldMarkings());
+                environment = new Environment();
+                marginX = 1500.0;
+                marginY = 1000.0;
+                break;
         }
     }
 

@@ -1,23 +1,12 @@
 ## Hello Gamers ##
 
-I wanted to be able to include some explanation of what things are and how we got here, as well as the purposes each java file serves.
+This is in Anticipation of Week 13 Review.
 
-Firstly; I had to add in these files, like lib, bin, and i guess this README, by creating a new Java Project, since there's a bunch of files that VSCode was looking for which didn't exist.
+I will outline any stuff I make below; I hope it's clear and easy to understand!
 
-I created a blank "Java: No Build Tools" project, and used the structure/config files that it generated to do so.
+Now here's a breakdown of my intentions behind the  Java files, and notes for each, for those that I added in this version. For now, I'll leave the existing classes there for simplicity, mainly because I don't want to delete it all rn just in case.
 
-Secondly; I have tried to structure the java files into relatively appropriate folders.
-
-- 'app' is where the main is, and it sstarts and runs the application
-- 'entities' are things that all exist within the simulation, so players, the ball, teams, and referees
-- 'simulation' are things that are respoisble for managing the actual match, whether that's its state, the rules for that match, the teams's scores,etc.
-- 'ui' is where we can put things that are reponsible for what we see during the simulation.
-
- A side effect of this is that I had to go in, and make changes to most of the preexisting entities to open them up and make them public, so that they became accessible, primarily by main. you may notice the packages (foldername); at the top of some of the files. additionally, in the Entity.java file, i had to add litle getters and setters to fix the error that was being detected in main
-
-Otherwise, everything i added at the moment is primarily structural, with no real changes to the code. i just wanted to get something out there to assist, but i will continue to try and work on this when i can :3
-
-Now here's a breakdown of my intentions behind the  Java files, and notes for each, for those that I added in this version.
+~ Michael ~
 
 ## 1 ~ Referee.java
         This is an entity that could exist on the field who is able to keep track of the game's events.

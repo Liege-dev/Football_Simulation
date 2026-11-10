@@ -9,7 +9,6 @@ public class GameState {
     private Team blueTeam;
     private Ball ball;
 
-    
     private Score score;
 
     private int elapsedTime;
@@ -25,7 +24,6 @@ public class GameState {
         this.blueTeam = blueTeam;
         this.ball = ball;
 
-       
         this.score = new Score();
 
         this.elapsedTime = 0;
@@ -36,8 +34,6 @@ public class GameState {
         this.currentPhase = MatchPhase.PRE_GAME;
     }
 
-   
-
     public Team getRedTeam() {
         return redTeam;
     }
@@ -46,13 +42,9 @@ public class GameState {
         return blueTeam;
     }
 
-   
-
     public Ball getBall() {
         return ball;
     }
-
-   
 
     public Score getScore() {
         return score;
@@ -74,8 +66,6 @@ public class GameState {
         score.addBlueGoal();
     }
 
-   
-
     public int getElapsedTime() {
         return elapsedTime;
     }
@@ -85,8 +75,6 @@ public class GameState {
             elapsedTime += seconds;
         }
     }
-
- 
 
     public boolean isRunning() {
         return running;
@@ -120,8 +108,6 @@ public class GameState {
         currentPhase = MatchPhase.POST_GAME;
     }
 
-  
-
     public MatchPhase getCurrentPhase() {
         return currentPhase;
     }
@@ -129,8 +115,6 @@ public class GameState {
     public void setCurrentPhase(MatchPhase currentPhase) {
         this.currentPhase = currentPhase;
     }
-
- 
 
     public void reset() {
 

@@ -11,7 +11,6 @@ public class Ruleset {
     private boolean extraTimeEnabled;
     private boolean penaltiesEnabled;
 
-    
     public Ruleset() {
         this.firstHalfDuration = 45 * 60;
         this.secondHalfDuration = 45 * 60;
@@ -23,7 +22,6 @@ public class Ruleset {
         this.penaltiesEnabled = true;
     }
 
-    
     public Ruleset(
             int firstHalfDuration,
             int secondHalfDuration,

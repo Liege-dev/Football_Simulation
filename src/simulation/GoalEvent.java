@@ -5,19 +5,14 @@ import entities.Team;
 
 public class GoalEvent {
 
-   
     private Player scorer;
 
-    
     private Team scoringTeam;
-
 
     private Player assister;
 
-   
     private int timeScored;
 
-  
     private boolean ownGoal;
 
     public GoalEvent(
@@ -33,7 +28,6 @@ public class GoalEvent {
         this.ownGoal = false;
     }
 
-  
     public GoalEvent(
             Player scorer,
             Team scoringTeam,
@@ -48,21 +42,17 @@ public class GoalEvent {
         this.ownGoal = ownGoal;
     }
 
-    
     public Player getScorer() {
         return scorer;
     }
 
-    
     public Team getScoringTeam() {
         return scoringTeam;
     }
 
-
     public Player getAssister() {
         return assister;
     }
-
 
     public int getTimeScored() {
         return timeScored;
@@ -72,12 +62,10 @@ public class GoalEvent {
         return ownGoal;
     }
 
-    
     public boolean hasAssist() {
         return assister != null;
     }
 
-    
     public String toString() {
 
         String result = "Goal scored at " + timeScored + " seconds";
