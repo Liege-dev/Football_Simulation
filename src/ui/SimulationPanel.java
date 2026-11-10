@@ -15,6 +15,7 @@ public class SimulationPanel extends JPanel {
     private Team redTeam;
     private Team blueTeam;
     private Ball ball;
+    private Scoreboard scoreboard; // optional overlay
 
     public SimulationPanel(
             GameMap map,
@@ -25,6 +26,10 @@ public class SimulationPanel extends JPanel {
         this.redTeam = redTeam;
         this.blueTeam = blueTeam;
         this.ball = ball;
+    }
+
+        public void setScoreboard(Scoreboard scoreboard) {
+        this.scoreboard = scoreboard;
     }
 
     private void drawPlayers(
@@ -101,5 +106,12 @@ public class SimulationPanel extends JPanel {
         int ballX = marginX + (int) Math.round(ball.getXPos() * scale) - (ballSize / 2);
         int ballY = marginY + (int) Math.round(ball.getYPos() * scale) - (ballSize / 2);
         g.fillOval(ballX, ballY, ballSize, ballSize);
+        
+        // Draw Scoreboard last so it sits on top of everything
+        if (scoreboard != null) {
+            scoreboard.draw(g, getWidth(), getHeight());
+        }
     }
+    
+      
 }
