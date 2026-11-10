@@ -1,6 +1,6 @@
 package entities;
 
-import behaviour.GuardGoal;
+import behaviour.Behaviours;
 import world.PlaySpace;
 
 public class Goalkeeper extends Player {
@@ -43,10 +43,10 @@ public class Goalkeeper extends Player {
 
         if (defendingLeft) {
             setMovementBehaviour(
-                    new GuardGoal(ball, playSpace.getLeftGoal(), 200.0));
+                    Behaviours.guardGoal(ball, playSpace.getLeftGoal(), 200.0));
 
         } else {
-            setMovementBehaviour(new GuardGoal(ball, playSpace.getRightGoal(), playSpace.getLength() - 200.0));
+            setMovementBehaviour(Behaviours.guardGoal(ball, playSpace.getRightGoal(), playSpace.getLength() - 200.0));
         }
     }
 
