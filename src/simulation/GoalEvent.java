@@ -66,14 +66,22 @@ public class GoalEvent {
         return assister != null;
     }
 
+        // e.g. "02:15  Red Team - #6 Attacker"  or  "...(own goal by #2)"
     public String toString() {
 
-        String result = "Goal scored at " + timeScored + " seconds";
+        String clock = String.format("%02d:%02d", timeScored / 60, timeScored % 60);
+        String teamName = scoringTeam == null ? "Unknown" : scoringTeam.getName();
 
-        if (ownGoal) {
-            result += " (Own Goal)";
+        if (scorer == null) {
+            return clock + "  " + teamName;
         }
 
-        return result;
+        String who = "#" + scorer.getNumber() + " " + scorer.getClass().getSimpleName();
+
+        if (ownGoal) {
+            return clock + "  " + teamName + " (own goal by " + who + ")";
+        }
+
+        return clock + "  " + teamName + " - " + who;
     }
 }
