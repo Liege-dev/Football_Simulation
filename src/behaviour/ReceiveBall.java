@@ -34,7 +34,7 @@ public class ReceiveBall implements MovementBehaviour {
                 && lastToucher != expectedPasser
                 && lastToucher != player) {
             player.setMovementBehaviour(
-                    new HoldFormation(ball, player.getXPos(), player.getYPos(), 0.2));
+                  Behaviours.holdFormation(ball, player.getXPos(), player.getYPos(), 0.2));
 
             player.updateMovement(0.0, 0.0, 0.0, deltaSeconds);
             return;

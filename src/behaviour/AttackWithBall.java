@@ -98,7 +98,7 @@ public class AttackWithBall implements MovementBehaviour {
                                     new AttackWithBall(ball, map, targetX, targetY)));
 
                     player.setMovementBehaviour(
-                            new HoldFormation(
+                            Behaviours.holdFormation(
                                     ball,
                                     player.getXPos(),
                                     player.getYPos(),

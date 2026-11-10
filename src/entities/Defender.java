@@ -1,6 +1,6 @@
 package entities;
 
-import behaviour.HoldFormation;
+import behaviour.Behaviours;
 import world.PlaySpace;
 
 public class Defender extends Player {
@@ -39,7 +39,7 @@ public class Defender extends Player {
     public void configureDefaultBehaviour(
         PlaySpace playSpace, boolean defendingLeft) {
         setMovementBehaviour(
-                new HoldFormation(
+                Behaviours.holdFormation(
                         ball,
                         spawnX,
                         spawnY,
